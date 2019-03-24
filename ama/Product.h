@@ -20,7 +20,7 @@ namespace ama
 		const char m_type;
 		char m_sku[max_length_sku];
 		char m_unit[max_length_unit];
-		char* m_name[max_length_name];
+		char m_name[max_length_name];
 		int m_qtyAvailable;
 		int m_qtyNeeded;
 		double m_price;
@@ -32,9 +32,9 @@ namespace ama
 
 	public:
 		
-		Product(const char type = 'N');/*
-		Product(const char* sku, const char* name, const char* unit, double price = 0, int qty = 0, bool taxable = true);
-		Product(const Product &obj);
+		Product(const char type = 'N');
+		Product(const char* sku, const char* name, const char* unit, double price = 0, int qtyNeeded = 0, int qty = 0, bool taxable = true);
+		/*Product(const Product &obj);
 		~Product();
 		Product& operator=(const Product& other);
 
