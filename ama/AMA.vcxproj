@@ -26,6 +26,7 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="ErrorState.h" />
     <ClInclude Include="Product.h" />
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Date.cpp" />
