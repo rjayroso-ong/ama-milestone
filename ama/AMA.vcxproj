@@ -31,7 +31,6 @@
   <ItemGroup>
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="ErrorState.cpp" />
-    <ClCompile Include="ms2.cpp" />
     <ClCompile Include="Product.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

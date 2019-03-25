@@ -1,8 +1,11 @@
 /* Milestone 3 - Product
    NAME: Royce Ayroso-Ong || ID: rjayroso-ong@myseneca.ca, 115813180 || DATE: 24/03/2019 */
 
+#include <iostream>
 #include <cstring>
 #include "Product.h"
+
+using namespace std;
 
 namespace ama
 {
@@ -59,7 +62,7 @@ namespace ama
 
 	Product::Product(const Product &other) : m_type(other.m_type)
 	{
-		//m_pName = nullptr;
+		//m_pName = nullptr; // only for deletion later
 		*this = other;
 	}
 
@@ -127,9 +130,72 @@ namespace ama
 
 	bool Product::isEmpty() const
 	{
-		// TODO: add ErrorSate check with isClear?
-		return isValid(m_pName);
+		return !isValid(m_pName);
 	}
 
-	
+	istream& Product::read(istream& in, bool interractive)
+	{
+		// TODO: add ErrorState
+		// TODO: add isClear checks
+		if (interractive)
+		{
+			char userAns;
+			char* pUserName;
+
+			// prompts user for values
+			cout << "Sku: ";
+			cin >> m_sku;                  // sku
+
+			cout << "Name (no spaces): ";
+			cin >> pUserName;                // name // NOTE: might have to define a seperate variable
+			strcpy(m_pName, pUserName);
+
+			cout << "Unit: ";
+			cin >> m_unit;
+
+			// TODO: fail state - more than just else statement
+			cout << "Taxed? (y/n): ";      // taxable status
+			cin >> userAns;
+			if (userAns == 'Y' || userAns == 'y')
+				m_taxable = true;
+			else if (userAns == 'N' || userAns == 'n')
+				m_taxable = false;
+			else
+				m_state = "Only (Y)es or (N)o are acceptable!";
+				
+			cout << "Price: ";             // price
+			cin >> m_price;
+
+			cout << "Quantity on hand: ";  // quantity available
+			cin >> m_qtyAvailable;
+
+			cout << "quantity needed: ";   // quantity needed
+			cin >> m_qtyNeeded;
+		}
+		else
+		{
+			// does NOT prompt user for values but instead takes them from stream
+			in.get(m_sku, max_length_sku, ',');
+			if (in.fail())
+			{
+
+			}
+			in.ignore();
+
+
+			/*
+			is.get(month, 3, '/');
+			if (is.fail())
+			{
+				tempDate.status(error_input);
+				break;
+			}
+			is.ignore();
+			*/
+		}
+
+		return in;
+	}
+
+	//std::istream& write(std::istream& out, bool writeMode) const;
 }
