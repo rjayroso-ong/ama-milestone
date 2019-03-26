@@ -32,6 +32,7 @@ namespace ama
 		void message(const char* pText);
 		bool isClear() const;
 		bool isValid(const char* name) const;
+		void setName(const char* newName);
 
 	public:
 		
@@ -46,11 +47,11 @@ namespace ama
 		bool operator>(const char* sku) const;
 		bool operator>(const Product& other) const;
 		int qtyAvailable() const;
-		int qrtyNeeded() const;
+		int qtyNeeded() const;
 		double total_cost() const;
 		bool isEmpty() const;
 		std::istream& read(std::istream& in, bool interractive);
-		std::istream& write(std::istream& out, bool writeMode) const;
+		std::ostream& write(std::ostream& out, bool writeMode) const;
 	};
 }
 #endif
