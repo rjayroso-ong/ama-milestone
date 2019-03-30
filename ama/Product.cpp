@@ -150,8 +150,7 @@ namespace ama
 		/*  initialize variables that will store the values of the input stream
 			before setting them to our member attributes                     */
 		const int tempSize = 99;
-		char* pName;
-		char sku[max_length_sku], unit[max_length_unit];
+		char name[max_length_name], sku[max_length_sku], unit[max_length_unit];
 		char price[tempSize], taxable[tempSize], qtyA[tempSize], qtyN[tempSize];
 
 		if (interractive) // prompts user for values
@@ -172,7 +171,7 @@ namespace ama
 				in.ignore();
 
 				cout << right << "Name (no spaces): ";
-				cin >> pName;               
+				cin >> name;               
 				if (in.fail())
 				{
 					in.setstate(ios::failbit);
@@ -239,14 +238,14 @@ namespace ama
 			}
 			if (!flag) // did not fail to read any and got to the end of the loop
 			{
-				*this = Product(sku, pName, unit, atof(price), atoi(qtyN), atoi(qtyA), atoi(taxable));
+				*this = Product(sku, name, unit, atof(price), atoi(qtyN), atoi(qtyA), atoi(taxable));
 			}
 			// IF CHECK TO SEE IF FAILED, IF SUCCESSFUL THEN SET VALUES
 			// TODO: remove in.ignore();?
 		}
 		else // does NOT prompt user for values but instead takes them from stream
 		{
-			char name[max_length_name];
+			
 			in.get(m_sku, max_length_sku, ',');
 			in.ignore();
 			in.get(name, max_length_name, ',');
