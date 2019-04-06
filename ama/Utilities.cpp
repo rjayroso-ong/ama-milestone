@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Utilities.h"
 #include "Product.h"
+#include "Perishable.h"
 
 using namespace std;
 
@@ -28,11 +29,16 @@ namespace ama
 	iProduct* createInstance(char tag)
 	{
 		iProduct* tempProd = nullptr;
+
 		if (tag == 'N' || tag == 'n')
 		{
 			tempProd = new Product();
 		}
-		else
-			return tempProd;
+		else if (tag == 'P' || tag == 'p')
+		{
+			tempProd = new Perishable();
+		}
+			
+		return tempProd;
 	}
 }

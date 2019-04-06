@@ -20,20 +20,24 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\MS1\dates.txt" />
-    <Text Include="..\..\MS1\expected_output.txt" />
-    <Text Include="G:\School\1st Year, Winter Semester 2019\BTP200\BTP-Project\MS3\ms3_expected_output.txt" />
+    <Text Include="inventory.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AmaApp.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="ErrorState.h" />
     <ClInclude Include="iProduct.h" />
+    <ClInclude Include="Perishable.h" />
     <ClInclude Include="Product.h" />
+    <ClInclude Include="Sort.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AmaApp.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="ErrorState.cpp" />
-    <ClCompile Include="ms4.cpp" />
+    <ClCompile Include="ms5.cpp" />
+    <ClCompile Include="Perishable.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>

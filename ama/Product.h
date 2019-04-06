@@ -21,6 +21,8 @@ namespace ama
 		bool m_taxable;
 		ErrorState m_state;
 
+	protected:
+
 		void message(const char* pText);
 		bool isClear() const;
 		bool isValid(const char* name) const;

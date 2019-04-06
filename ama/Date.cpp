@@ -235,7 +235,6 @@ namespace ama
 		} 
 
 		if (tempDate.status() != error_input)
-
 			tempDate = Date(atoi(year), atoi(month), atoi(day));
 			
 		*this = tempDate;

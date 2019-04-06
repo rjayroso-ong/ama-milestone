@@ -18,10 +18,7 @@
     <Text Include="..\..\MS1\dates.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="..\..\MS1\expected_output.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="G:\School\1st Year, Winter Semester 2019\BTP200\BTP-Project\MS3\ms3_expected_output.txt">
+    <Text Include="inventory.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
@@ -41,6 +38,15 @@
     <ClInclude Include="iProduct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Perishable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AmaApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Date.cpp">
@@ -55,7 +61,13 @@
     <ClCompile Include="Utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ms4.cpp">
+    <ClCompile Include="Perishable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ms5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AmaApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
