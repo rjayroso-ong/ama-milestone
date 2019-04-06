@@ -4,13 +4,14 @@
 #define AMA_UTILITIES_H
 
 #include <iostream>
-#include "Product.h"
+#include "iProduct.h"
 
 namespace ama
 {
-	double& operator+=(double& total, const Product& prod);
-	std::ostream& operator<<(std::ostream& out, const Product& prod);
-	std::istream& operator>>(std::istream& in, Product& prod);
+	double& operator+=(double& total, const iProduct& prod);
+	std::ostream& operator<<(std::ostream& out, const iProduct& prod);
+	std::istream& operator>>(std::istream& in, iProduct& prod);
+	iProduct* createInstance(char tag);
 }
 
 #endif

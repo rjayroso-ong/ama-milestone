@@ -5,19 +5,11 @@
 
 #include <iostream>
 #include "ErrorState.h"
+#include "iProduct.h"
 
 namespace ama
 {
-	const int max_length_label = 30;
-	const int max_length_sku = 7;
-	const int max_length_name = 75;
-	const int max_length_unit = 10;
-	const int write_condensed = 0;
-	const int write_table = 1;
-	const int write_human = 2;
-	const double tax_rate = 0.13;
-
-	class Product
+	class Product : public iProduct
 	{
 		const char m_type;
 		char m_sku[max_length_sku];
@@ -45,9 +37,10 @@ namespace ama
 		int operator+=(int cnt);
 		bool operator==(const char* sku) const;
 		bool operator>(const char* sku) const;
-		bool operator>(const Product& other) const;
+		bool operator>(const iProduct& other) const;
 		int qtyAvailable() const;
 		int qtyNeeded() const;
+		const char* name() const;
 		double total_cost() const;
 		double price() const;
 		bool isEmpty() const;

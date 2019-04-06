@@ -86,7 +86,7 @@ namespace ama
 		{
 			strncpy(m_sku, other.m_sku, max_length_sku);
 			strncpy(m_unit, other.m_unit, max_length_unit);
-			setName(other.m_pName);
+			setName(other.name());
 			m_qtyAvailable = other.m_qtyAvailable;
 			m_qtyNeeded = other.m_qtyNeeded;
 			m_price = other.m_price;
@@ -118,9 +118,9 @@ namespace ama
 	}
 
 	// operator>(const Product& other) returns true if the name is greater than the other product's name
-	bool Product::operator>(const Product& other) const
+	bool Product::operator>(const iProduct& other) const
 	{
-		return (strcmp(m_pName, other.m_pName) > 0);
+		return (strcmp(name(), other.name()) > 0);
 	}
 
 	// qtyAvailable() returns the value of the attribute storing the quantity available
@@ -133,6 +133,12 @@ namespace ama
 	int Product::qtyNeeded() const
 	{
 		return m_qtyNeeded;
+	}
+
+	// name() returns the name of the product
+	const char* Product::name() const
+	{
+		return m_pName;
 	}
 
 	// total_cost() returns the the cost of all available units, including tax
@@ -156,7 +162,7 @@ namespace ama
 
 	bool Product::isEmpty() const
 	{
-		return !isValid(m_pName);
+		return !isValid(name());
 	}
 
 	istream& Product::read(istream& in, bool interractive)
@@ -286,7 +292,7 @@ namespace ama
 		{
 			if (writeMode == write_condensed)
 			{
-				out << m_type << "," << m_sku << "," << m_pName << ","
+				out << m_type << "," << m_sku << "," << name() << ","
 					<< m_unit << "," << fixed << setprecision(2) << m_price << "," << m_taxable << ","
 					<< m_qtyAvailable << "," << m_qtyNeeded;
 			}
@@ -299,10 +305,10 @@ namespace ama
 
 				// displaying - NAME
 				out.width(16);
-				if (strlen(m_pName) > 16)
+				if (strlen(name()) > 16)
 				{
 					char tempName[17];
-					strncpy(tempName, m_pName, 13);
+					strncpy(tempName, name(), 13);
 					tempName[13] = '.';
 					tempName[14] = '.';
 					tempName[15] = '.';
@@ -311,7 +317,7 @@ namespace ama
 					out << left << tempName << " | ";
 				}
 				else
-					out << left << m_pName << " | ";
+					out << left << name() << " | ";
 				
 				// displaying - UNIT
 				out.width(10);
@@ -341,7 +347,7 @@ namespace ama
 				out.width(max_length_label);
 				out << right << "Sku: " << m_sku << endl;
 				out.width(max_length_label);
-				out << right << "Name: " << m_pName << endl;
+				out << right << "Name: " << name() << endl;
 				out.width(max_length_label);
 				out << right << "Price: " << fixed << setprecision(2) << m_price << endl;
 				out.width(max_length_label);

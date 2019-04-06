@@ -3,24 +3,36 @@
 
 #include <iostream>
 #include "Utilities.h"
+#include "Product.h"
 
 using namespace std;
 
 namespace ama
 {
-	double& operator+=(double& total, const Product& prod)
+	double& operator+=(double& total, const iProduct& prod)
 	{
 		total += prod.total_cost();
 		return total;
 	}
 
-	ostream& operator<<(ostream& out, const Product& prod)
+	ostream& operator<<(ostream& out, const iProduct& prod)
 	{
 		return prod.write(out, write_human);
 	}
 
-	istream& operator>>(istream& in, Product& prod)
+	istream& operator>>(istream& in, iProduct& prod)
 	{
 		return prod.read(in, true);
+	}
+
+	iProduct* createInstance(char tag)
+	{
+		iProduct* tempProd = nullptr;
+		if (tag == 'N' || tag == 'n')
+		{
+			tempProd = new Product();
+		}
+		else
+			return tempProd;
 	}
 }
