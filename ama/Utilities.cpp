@@ -1,7 +1,10 @@
 /* Milestone 3 - Utilities
    NAME: Royce Ayroso-Ong || ID: rjayroso-ong@myseneca.ca, 115813180 || DATE: 24/03/2019 */
 
+#include <iostream>
 #include "Utilities.h"
+
+using namespace std;
 
 namespace ama
 {
@@ -11,12 +14,12 @@ namespace ama
 		return total;
 	}
 
-	std::ostream& operator<<(std::ostream& out, const Product& prod) 
+	ostream& operator<<(ostream& out, const Product& prod)
 	{
 		return prod.write(out, write_human);
 	}
 
-	std::istream& operator>>(std::istream& in, Product& prod)
+	istream& operator>>(istream& in, Product& prod)
 	{
 		return prod.read(in, true);
 	}

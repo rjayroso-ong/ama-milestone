@@ -49,9 +49,10 @@ namespace ama
 		int qtyAvailable() const;
 		int qtyNeeded() const;
 		double total_cost() const;
+		double price() const;
 		bool isEmpty() const;
 		std::istream& read(std::istream& in, bool interractive);
-		std::ostream& write(std::ostream& out, bool writeMode) const;
+		std::ostream& write(std::ostream& out, int writeMode) const;
 	};
 }
 #endif
