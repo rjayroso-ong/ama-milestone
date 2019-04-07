@@ -1,4 +1,11 @@
-// NAME: Royce Ayroso-Ong || ID: 115813180 || DATE: 10/03/2019
+/*===========================================================================\\
+||                                Date.cpp                                   ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   07/04/2019                                                        ||
+\\===========================================================================*/
+
 #include <iostream>
 #include <string>
 #include "Date.h"
@@ -37,7 +44,7 @@ namespace ama
 		m_status = newStatus;
 	}
 
-	// overloaded status function sets the status based on the DATE given and then returns the status
+	// overloaded status() function sets the status based on the DATE given and then returns the status
 	int Date::status(int year, int month, int day)
 	{
 		// change status based on the DATE parameters
@@ -66,7 +73,7 @@ namespace ama
 	// isValidYear returns true if the year entered is between min_year and max_year inclusive
 	bool Date::isValidYear(int year) const
 	{
-		if (min_year < year && year < max_year)
+		if (min_year <= year && year < max_year)
 			return true;
 		return false;
 	}
@@ -204,11 +211,22 @@ namespace ama
 	istream& Date::read(std::istream& is)
 	{
 		Date tempDate = Date();
-		char year[5], month[3], day[3];
+		// char year[5], month[3], day[3];
+		int year, month, day;
 
 		while (1)
 		{
-			is.get(year, 5);
+			// is.get(year, 5);
+			is >> year;
+			if (is.fail())
+			{
+				tempDate.status(error_input);
+				break;
+			}
+			is.ignore(); // ignore newline
+
+			is >> month;
+			// is.get(month, 3, '/');
 			if (is.fail())
 			{
 				tempDate.status(error_input);
@@ -216,15 +234,8 @@ namespace ama
 			}
 			is.ignore();
 
-			is.get(month, 3, '/');
-			if (is.fail())
-			{
-				tempDate.status(error_input);
-				break;
-			}
-			is.ignore();
-
-			is.get(day, 3, '/');
+			// is.get(day, 3, '/');
+			is >> day;
 			if (is.fail())
 			{
 				tempDate.status(error_input);
@@ -234,12 +245,22 @@ namespace ama
 			break;
 		} 
 
-		if (tempDate.status() != error_input)
-			tempDate = Date(atoi(year), atoi(month), atoi(day));
+		if (tempDate.status() != error_input) // the dates are not error
+		{
+			// tempDate = Date(atoi(year), m_month, atoi(day));
+			tempDate = Date(year, month, day);
+		}
 			
 		*this = tempDate;
 
 		return is;
+
+		/* [07/04/2019]
+		   Author's Note: This section works but seems to be inefficient, will 
+		   have to reimplement in the future. The commented lines are legacy
+		   code, but for submission purposes i will keep them there until 
+		   the milestone is succesfully submitted.
+		*/
 	}
 
 	ostream& Date::write(ostream& os) const

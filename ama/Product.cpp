@@ -1,5 +1,10 @@
-/* Milestone 3 - Product
-   NAME: Royce Ayroso-Ong || ID: rjayroso-ong@myseneca.ca, 115813180 || DATE: 24/03/2019 */
+/*===========================================================================\\
+||                              Product.cpp                                  ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   06/04/2019                                                        ||
+\\===========================================================================*/
 
 #include <iostream>
 #include <iomanip>
@@ -22,8 +27,8 @@ namespace ama
 		return (m_state.message() == nullptr);
 	}
 
-	/* isValid(const char* name) returns true if parameter name is not a nullptr 
-	   and not empty and under 75 characters long                             */
+	/* isValid(const char* name) returns true if parameter name isn't a nullptr 
+	   and not empty and under 75 characters long                            */
 	bool Product::isValid(const char* name) const
 	{
 		return (name != nullptr && strcmp(name, "") != 0 && strlen(name) <= 75);
@@ -80,6 +85,7 @@ namespace ama
 		delete[] m_pName;
 	}
 
+	// operator= copies the contents of other into current instance
 	Product& Product::operator=(const Product& other)
 	{
 		if (this != &other)
@@ -96,7 +102,7 @@ namespace ama
 		return *this;
 	}
 
-	// operator+=(int cnt) adds to cnt the quantity available if cnt is positive
+	// operator+= adds to cnt the quantity available if cnt is positive
 	int Product::operator+=(int cnt)
 	{
 		if (cnt > 0)
@@ -105,19 +111,19 @@ namespace ama
 		return qtyAvailable();
 	}
 
-	// operator==(const char* sku) returns true if the sku is equal to the other product's sku
+	// operator== returns true if the sku is equal to the other product's sku
 	bool Product::operator==(const char* sku) const
 	{
 		return (strcmp(m_sku, sku) == 0);
 	}
 
-	// operator>(const char* sku) returns true if the SKU is greater than the other product's SKU
+	// operator> returns true if the SKU is greater than the other product's SKU
 	bool Product::operator>(const char* sku) const
 	{
 		return (strcmp(m_sku, sku) > 0);
 	}
 
-	// operator>(const Product& other) returns true if the name is greater than the other product's name
+	// operator> returns true if the name is greater than the other product's name
 	bool Product::operator>(const iProduct& other) const
 	{
 		return (strcmp(name(), other.name()) > 0);
@@ -160,6 +166,7 @@ namespace ama
 		return m_price;
 	}
 
+	// isEmpty() checks if the product is in an empty state
 	bool Product::isEmpty() const
 	{
 		return !isValid(name());
@@ -258,12 +265,9 @@ namespace ama
 		}
 		else // does NOT prompt user for values but instead takes them from stream
 		{	
-			in.get(m_sku, max_length_sku, ',');
-			in.ignore();
-			in.get(name, max_length_name, ',');
-			in.ignore();
-			in.get(m_unit, max_length_unit, ',');
-			in.ignore();
+			in.getline(m_sku, max_length_sku, ',');
+			in.getline(name, max_length_name, ',');
+			in.getline(m_unit, max_length_unit, ',');
 
 			in >> m_price;
 			in.ignore();
@@ -272,6 +276,8 @@ namespace ama
 			in >> m_qtyAvailable;
 			in.ignore();
 			in >> m_qtyNeeded;
+			in.ignore();
+			
 
 			*this = Product(m_sku, name, m_unit, m_price, m_qtyNeeded, m_qtyAvailable, m_taxable);
 		}

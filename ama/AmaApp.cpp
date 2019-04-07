@@ -1,9 +1,16 @@
+/*===========================================================================\\
+||                             AmaApp.cpp                                    ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   07/04/2019                                                        ||
+\\===========================================================================*/
+
 #include <iostream>
 #include <fstream>
 #include <cstring>
 #include <iomanip>
 #include "AmaApp.h"
-#include "iProduct.h"
 #include "Utilities.h"
 #include "Sort.h"
 
@@ -14,7 +21,7 @@ namespace ama
 	AmaApp::AmaApp(const char filename[])
 	{
 		strncpy(m_filename, filename, 256);
-		for (int i = 0; i < 100; i++) // set all m_product elements to null
+		for (int i = 0; i < 100; i++)     // set all m_product elements to null
 			m_products[i] = nullptr;
 		m_noOfProducts = 0;
 		loadProductRecords();
@@ -22,12 +29,8 @@ namespace ama
 
 	AmaApp::~AmaApp()
 	{
-		for (int i = 0; i < 100; i++) // delete all m_product elements
+		for (int i = 0; i < 100; i++)     // delete all m_product elements
 			delete m_products[i];
-	}
-
-	void clearKeyboard(void) {
-		while (getchar() != '\n'); // empty execution code block on purpose
 	}
 
 	// pause() waits for the user to hit enter before anything else can be executed
@@ -37,6 +40,7 @@ namespace ama
 		clearKeyboard();
 	}
 
+	// menu() displays the menu and returns the user's input slection as an int
 	int AmaApp::menu() const
 	{
 		int userAns;
@@ -61,20 +65,24 @@ namespace ama
 			return -1; // selection is invalid
 	}
 
+	// loadProductRecords() opens a file for reading and stores the data into m_products
 	void AmaApp::loadProductRecords()
 	{
 		// delete all products from the array (if any)
 		for (int i = 0; i < 100; i++)
 			if (m_products[i] != nullptr)
-				delete m_products[i];
-
+			{
+				delete m_products[i]; 
+				m_products[i] = nullptr;
+			}
+				
 		int readIndex = 0;
-		ifstream fin(m_filename);
+		ifstream fin;
 		fin.open(m_filename);
 
 		if (fin.is_open())
 		{
-			while (!fin.bad() && !fin.eof())
+			while (fin.good())
 			{
 				// read the product tag
 				char productTag = fin.get();
@@ -91,10 +99,12 @@ namespace ama
 			}
 
 			m_noOfProducts = readIndex;
-			fin.close();
 		}
+
+		fin.close();
 	}
 
+	// saveProductRecords() const loops through m_products and writes them to a file
 	void AmaApp::saveProductRecords() const
 	{
 		ofstream fout(m_filename);
@@ -107,13 +117,14 @@ namespace ama
 			}
 	}
 
+	// listProducts() loops through m_products and displays them in table form
 	void AmaApp::listProducts() const
 	{
 		double total = 0;
 
 		cout << "------------------------------------------------------------------------------------------------" << endl
-			<< "| Row |     SKU | Product Name     | Unit       |   Price | Tax |   QtyA |   QtyN | Expiry     |" << endl
-			<< "|-----|---------|------------------|------------|---------|-----|--------|--------|------------|" << endl;
+			 << "| Row |     SKU | Product Name     | Unit       |   Price | Tax |   QtyA |   QtyN | Expiry     |" << endl
+			 << "|-----|---------|------------------|------------|---------|-----|--------|--------|------------|" << endl;
 
 		for (int i = 0; i < m_noOfProducts; i++)
 		{
@@ -126,34 +137,38 @@ namespace ama
 		}
 
 		cout << "------------------------------------------------------------------------------------------------" << endl
-			<< "|                                                      Total cost of support ($): | ";
+			 << "|                                                      Total cost of support ($): | ";
 		cout.width(10);
 		cout << right << fixed << setprecision(2) << total << " |" << endl
-			<< "------------------------------------------------------------------------------------------------" << endl;
+			 << "------------------------------------------------------------------------------------------------" << endl
+			 << endl;
 
-		AmaApp::pause();
+		pause(); // before the list ends, pause for user <enter> input
 	}
 
+	/* deleteProductRecord() finds the parameter product in m_products, and 
+	   deletes it by excluding it from being saved to the file              */
 	void AmaApp::deleteProductRecord(iProduct* product)
 	{
 		ofstream fout(m_filename);
 
 		if (fout.is_open())
 			for (int i = 0; i < m_noOfProducts; i++)
-			{
 				if (m_products[i] != product)
 				{
 					m_products[i]->write(fout, write_condensed);
 					fout << endl;
 				}
-			}
 	}
 
+	// sort() calls upon sict::sort to bubble sort m_products in ascending order
 	void AmaApp::sort()
 	{
 		sict::sort(m_products, m_noOfProducts);
 	}
 
+	/* find() loops through m_products and returns a product if it matches the 
+	   parameter sku, otherwise returns nullptr                                */
 	iProduct* AmaApp::find(const char* sku) const
 	{
 		for (int i = 0; i < m_noOfProducts; i++)
@@ -165,38 +180,44 @@ namespace ama
 		return nullptr;                         // if there is no match
 	}
 
+	// addQty() updates the quantity on hand for the iProduct paramater product
 	void AmaApp::addQty(iProduct* product)
 	{
 		int userAns;
 
+		// display the parameter product in human readable form
 		product->write(cout, write_human);
 		cout << endl << endl;
 
 		cout << "Please enter the number of purchased items: ";
 		cin >> userAns;
-		if (cin.fail())
+		if (cin.fail()) // if userAns is INVALID
 		{
 			cin.clear();
-			cout << "Invalid quantity value!" << endl;
+			cout << "Invalid quantity value!" << endl << endl;
 		}
-		else
+		else            // if userAns is valid
 		{
 			int amountRequired = (product->qtyNeeded() - product->qtyAvailable());
 			if (userAns <= amountRequired)
-				product += userAns;
-			else
 			{
+				*product += userAns; 
+			}
+			else        // if userAns is more than the required amount of items
+			{
+				*product += amountRequired;
 				cout << "Too many items; only " << amountRequired
-					<< "is needed. Please return the extra "
+					<< " is needed. Please return the extra "
 					<< (userAns - amountRequired) << " items." << endl;
 			}
+			cout << endl << "Updated!" << endl << endl;
 		}
 
 		saveProductRecords();
-		cout << endl << "Updated!" << endl;
 		clearKeyboard();
 	}
 
+	// addProduct() adds a new product at the end of the array
 	void AmaApp::addProduct(char tag)
 	{
 		m_products[m_noOfProducts] = createInstance(tag);
@@ -207,16 +228,20 @@ namespace ama
 			if (cin.fail())                                  // unsuccessfully read
 			{
 				cin.clear();
-				cout << endl << m_products[m_noOfProducts] << endl << endl;
+				clearKeyboard();
+				cout << endl << *m_products[m_noOfProducts] << endl << endl;
+				m_products[m_noOfProducts] = nullptr;
 			}
 			else                                             // successfully read
 			{
+				m_noOfProducts++;
 				saveProductRecords();
 				cout << endl << "Success!" << endl << endl;
 			}
 		}
 	}
 
+	// run() displays the menu, and calls functions based on the user's input
 	int AmaApp::run()
 	{
 		bool flag = true;
@@ -225,7 +250,7 @@ namespace ama
 		{
 			int userSelection = menu();
 			iProduct* tempProduct = nullptr;
-			char userAns[ama::max_length_sku];
+			char userAns[max_length_sku];
 
 			switch (userSelection)
 			{
@@ -235,9 +260,15 @@ namespace ama
 
 			case (2):
 				cout << "Please enter the product SKU: ";
+				cin >> userAns;
+				clearKeyboard();
 				tempProduct = find(userAns);
+				cout << endl;
 				if (tempProduct != nullptr)
+				{
 					tempProduct->write(cout, write_human);
+					cout << endl;
+				}
 				else
 					cout << "No such product!" << endl;
 
@@ -247,22 +278,32 @@ namespace ama
 			case (3):
 				addProduct('N');
 				loadProductRecords();
+				break;
 
 			case (4):
 				addProduct('P');
 				loadProductRecords();
+				break;
 
 			case (5):
 				cout << "Please enter the product SKU: ";
+				cin >> userAns;
+				clearKeyboard();
 				tempProduct = find(userAns);
+				cout << endl;
 				if (tempProduct != nullptr)
 					addQty(tempProduct);
 				else
 					cout << "No such product!" << endl << endl;
+				break;
+
 
 			case (6):
 				cout << "Please enter the product SKU: ";
+				cin >> userAns;
 				tempProduct = find(userAns);
+				clearKeyboard();
+				cout << endl;
 				if (tempProduct != nullptr)
 				{
 					deleteProductRecord(tempProduct);
@@ -272,20 +313,31 @@ namespace ama
 				else
 					cout << "No such product!" << endl;
 
+				break;
+
 			case (7):
 				sort();
 				saveProductRecords();
 				cout << "Sorted!" << endl << endl;
+				break;
 
 			case (0):
 				cout << "Goodbye!" << endl;
-				return 0;
+				return 0; // sucessful exit
+
 			default:
 				cout << "~~~Invalid selection, try again!~~~" << endl;
 				pause();
 				break;
 			}
 		}
+
+		return 1;         // unsucessful exit
+	}
+
+	// clearKeyboard() clears the user input from any newlines
+	void clearKeyboard()
+	{
+		while (getchar() != '\n');
 	}
 }
-// TODO: make helper function to read sku

@@ -1,4 +1,10 @@
-// NAME: Royce Ayroso-Ong || ID: 115813180 || DATE: 10/03/2019
+/*===========================================================================\\
+||                                 Date.h                                    ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   06/04/2019                                                        ||
+\\===========================================================================*/
 #ifndef AMA_DATE_H
 #define AMA_DATE_H
 
@@ -60,4 +66,5 @@ namespace ama
 	std::istream& operator>>(std::istream& is, Date& rhs);
 	std::ostream& operator<<(std::ostream& os, const Date& rhs);
 }
+
 #endif

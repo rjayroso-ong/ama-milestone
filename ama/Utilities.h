@@ -1,5 +1,10 @@
-/* Milestone 3 - Utilities
-   NAME: Royce Ayroso-Ong || ID: rjayroso-ong@myseneca.ca, 115813180 || DATE: 24/03/2019 */
+/*===========================================================================\\
+||                              Utilities.h                                  ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   06/04/2019                                                        ||
+\\===========================================================================*/
 #ifndef AMA_UTILITIES_H
 #define AMA_UTILITIES_H
 

@@ -1,5 +1,10 @@
-/* Milestone 5 - Perishable.cpp
-   NAME: Royce Ayroso-Ong || ID: rjayroso-ong@myseneca.ca, 115813180 || DATE: 06/04/2019 */
+/*===========================================================================\\
+||                              Perishable.h                                 ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   06/04/2019                                                        ||
+\\===========================================================================*/
 #ifndef AMA_PERISHABLE_H
 #define AMA_PERISHABLE_H
 

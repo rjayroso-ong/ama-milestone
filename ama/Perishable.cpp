@@ -1,8 +1,14 @@
-/* Milestone 5 - Perishable.cpp
-   NAME: Royce Ayroso-Ong || ID: rjayroso-ong@myseneca.ca, 115813180 || DATE: 06/04/2019 */
+/*===========================================================================\\
+||                             Perishable.cpp                                ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   07/04/2019                                                        ||
+\\===========================================================================*/
 
 #include <iostream>
 #include "Perishable.h"
+#include "AmaApp.h"
 
 using namespace std;
 
@@ -16,15 +22,19 @@ namespace ama
 	ostream& Perishable::write(ostream& out, int writeMode) const
 	{
 		Product::write(out, writeMode);
-		if (writeMode == write_human)
+
+		if (m_expiryDate.isGood()) // if m_expiryDate is a valid date
 		{
-			out.width(max_length_label);
-			out << right << "Exipry Date: " << m_expiryDate << endl;
+			if (writeMode == write_human)
+			{
+				out.width(max_length_label);
+				out << right << "Expiry Date: " << m_expiryDate << endl;
+			}
+			else if (writeMode == write_table)
+				out << " " << m_expiryDate << " |";
+			else if (writeMode == write_condensed)
+				out << "," << m_expiryDate;
 		}
-		else if (writeMode == write_table)
-			out << m_expiryDate << " |";
-		else if (writeMode == write_condensed)
-			out << "," << m_expiryDate;
 		
 		return out;
 	}
@@ -32,14 +42,17 @@ namespace ama
 	istream& Perishable::read(istream& in, bool interractive)
 	{
 		Date tempDate;
+		Product::read(in, interractive);
 
-		if (interractive)
+		if (interractive && Product::isClear()) // read is successful AND it is interractive mode
 		{
 			cout.width(max_length_label);
 			cout << right << "Expiry date (YYYY/MM/DD): ";
+			clearKeyboard();
 			in >> tempDate;
-			// NOTE: maybe should change to strcmp(tempDate.status(), no_error) == 0
-			if (!tempDate.isGood())                   // tempDate has errors
+			
+			
+			if (!tempDate.isGood())             // tempDate has errors
 			{
 				in.setstate(ios::failbit);
 				if (tempDate.status() == error_year)
@@ -51,10 +64,10 @@ namespace ama
 				else
 					message("Invalid Date Entry");
 			}
-			else                                      // tempDate has NO errors
+			else                                // tempDate has NO errors
 				m_expiryDate = tempDate;
 		}
-		else
+		else if (!interractive) 
 		{
 			m_expiryDate.read(in);
 			in.ignore();
@@ -62,5 +75,4 @@ namespace ama
 
 		return in;
 	}
-
 }

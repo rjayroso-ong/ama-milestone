@@ -1,5 +1,10 @@
-/* Milestone 3 - Product
-   NAME: Royce Ayroso-Ong || ID: rjayroso-ong@myseneca.ca, 115813180 || DATE: 24/03/2019 */
+/*===========================================================================\\
+||                               Product.h                                   ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   06/04/2019                                                        ||
+\\===========================================================================*/
 #ifndef AMA_PRODUCT_H
 #define AMA_PRODUCT_H
 
@@ -50,4 +55,5 @@ namespace ama
 		std::ostream& write(std::ostream& out, int writeMode) const;
 	};
 }
+
 #endif

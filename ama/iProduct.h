@@ -1,5 +1,10 @@
-/* Milestone 4 - iProduct.h
-   NAME: Royce Ayroso-Ong || ID: rjayroso-ong@myseneca.ca, 115813180 || DATE: 05/04/2019 */
+/*===========================================================================\\
+||                              iProduct.h                                   ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   07/04/2019                                                        ||
+\\===========================================================================*/
 #ifndef AMA_IPRODUCT_H
 #define AMA_IPRODUCT_H
 

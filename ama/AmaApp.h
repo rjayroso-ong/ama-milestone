@@ -1,3 +1,10 @@
+/*===========================================================================\\
+||                                AmaApp.h                                   ||
+|| Author: Royce Ayroso-Ong                                                  ||
+|| Email:  rjayroso-ong@myseneca.ca                                          ||
+|| ID:     115813180                                                         ||
+|| Date:   07/04/2019                                                        ||
+\\===========================================================================*/
 #ifndef AMA_AMAAPP_H
 #define AMA_AMAAPP_H
 
@@ -8,7 +15,7 @@ namespace ama
 	class AmaApp
 	{
 		char m_filename[256];
-		ama::iProduct* m_products[100];
+		iProduct* m_products[100];
 		int m_noOfProducts;
 
 		AmaApp(const AmaApp& other) = delete;
@@ -20,7 +27,7 @@ namespace ama
 		void listProducts() const;
 		void deleteProductRecord(ama::iProduct* product);
 		void sort();
-		ama::iProduct* find(const char* sku) const;
+		iProduct* find(const char* sku) const;
 		void addQty(ama::iProduct* product);
 		void addProduct(char tag);
 
@@ -30,6 +37,8 @@ namespace ama
 		~AmaApp();
 		int run();
 	};
+
+	void clearKeyboard();
 }
 #endif
 
